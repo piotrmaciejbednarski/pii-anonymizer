@@ -93,20 +93,18 @@ gliner-nask/
 
 ### Instalacja lokalna
 
-Pobierz model Polimorf ze strony https://zil.ipipan.waw.pl/PoliMorf
+Pobierz bazę Polimorf ze strony https://zil.ipipan.waw.pl/PoliMorf i wrzuć do katalogu, zrob rename na "polimorf.tab" i wrzuc do katalogu /data/
+
+Pamiętaj rowniez o pobraniu modelu gliner-pii-polish z Hugging Face! https://huggingface.co/piotrmaciejbednarski/gliner-pii-polish sklonuj go do /app/models/
 
 ```bash
-# 1. Klonowanie
-git clone <repo-url>
-cd gliner-nask
-
-# 2. Zaleznosci
+# Zaleznosci
 pip install -r requirements.txt
 
-# 3. Model spaCy
+# Model spaCy
 python -m spacy download pl_core_news_lg
 
-# 4. Uruchomienie
+# Uruchomienie
 uvicorn app.main:app --host 0.0.0.0 --port 8000
 ```
 
