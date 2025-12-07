@@ -1,0 +1,51 @@
+# PII Anonymizer - Docker Compose
+# Hybrid Context-Aware Anonymizer for Polish
+
+version: "3.8"
+
+services:
+  anonymizer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: pii-anonymizer
+    ports:
+      - "8000:8000"
+    environment:
+      # Model cache paths (mapped to volumes)
+      - HF_HOME=/cache/huggingface
+      - TRANSFORMERS_CACHE=/cache/huggingface
+      - SPACY_DATA=/cache/spacy
+      # PyTorch device (CPU in container)
+      - TORCH_DEVICE=cpu
+      # API settings
+      - API_HOST=0.0.0.0
+      - API_PORT=8000
+    volumes:
+      # Model cache volumes (persist across restarts)
+      # HuggingFace models (~2-3GB for GLiNER)
+      - hf_cache:/cache/huggingface
+      # spaCy models (~500MB for pl_core_news_lg)
+      - spacy_cache:/cache/spacy
+      # Application data (Polimorf DB, candidates, etc.)
+      - ./data:/app/data
+      # Fine-tuned models
+      - ./app/models:/app/models
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+# Named volumes for model caching
+# These persist across container restarts and rebuilds
+volumes:
+  hf_cache:
+    name: pii-anonymizer-hf-cache
+    driver: local
+  spacy_cache:
+    name: pii-anonymizer-spacy-cache
+    driver: local
+

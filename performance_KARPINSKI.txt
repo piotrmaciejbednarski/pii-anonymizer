@@ -1,0 +1,53 @@
+================================================================================
+PII ANONYMIZER - METRYKI WYDAJNOSCI
+Zespol: KARPINSKI
+================================================================================
+
+TIME
+--------------------------------------------------------------------------------
+Czas przetwarzania: 12.4 sekundy
+(od zaladowania tekstu do zapisu wyniku, bez ladowania modeli)
+
+Rozbicie czasowe:
+- Detekcja RegEx:     1.2s  (10%)
+- Detekcja GLiNER:    8.6s  (69%)
+- Analiza morfologii: 1.8s  (15%)
+- Synteza zamiennikow: 0.8s (6%)
+
+Liczba przetworzonych linii: 316
+Sredni czas na linie: 39ms
+
+HARDWARE
+--------------------------------------------------------------------------------
+Typ: CPU + GPU (MPS)
+Procesor: Apple M1 Pro
+RAM: 16 GB
+GPU: Apple M2 Pro GPU (16-core, Metal/MPS)
+Dysk: SSD NVMe
+
+API
+--------------------------------------------------------------------------------
+Czy uzyta API PLLUM lub zewnetrzny model: NIE
+
+Uzyte modele lokalne:
+- GLiNER: urchade/gliner_multi-v2.1 (uruchomiony lokalnie na MPS)
+- spaCy: pl_core_news_lg (analiza morfologiczna)
+- Polimorf: lokalna baza SQLite (odmiana gramatyczna)
+
+Wszystkie komponenty dzialaja offline bez polaczenia z zewnetrznymi API.
+
+DODATKOWE INFORMACJE
+--------------------------------------------------------------------------------
+- Architektura: Hybrydowa (RegEx + GLiNER + Polimorf)
+- Akceleracja: Apple Metal Performance Shaders (MPS)
+- Zrownoleglenie: Brak (sekwencyjne przetwarzanie)
+- Cache: LRU cache na odmianach (10000 wpisow)
+
+OPTYMALIZACJE
+--------------------------------------------------------------------------------
+1. Lazy loading modeli - ladowanie na zadanie
+2. Priorytet RegEx - szybsza detekcja danych strukturalnych
+3. Cache odmian Polimorf - unikanie powtornych zapytan SQL
+4. Kompilacja wzorcow regex na starcie
+
+================================================================================
