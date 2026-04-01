@@ -10,8 +10,6 @@ Zespol KARPINSKI | HackNation 2025
 
 Hybrydowy system anonimizacji danych osobowych laczacy precyzje wyrazen regularnych z pokryciem modelu NER, uzupelniony o kontekstowa odmiane gramatyczna przez wszystkie 7 polskich przypadkow.
 
----
-
 ## Mapa repozytorium
 
 ```
